@@ -4,38 +4,45 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;;
+import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 /**
- * Problem 1.
+ * https://www.e-olymp.com/ru/problems/9016
  */
-public final class SimpleTask {
-
-    static class Node {
-        char data;
-        Node leftChild;
-        Node rightChild;
-
-        public Node(char data, Node leftChild, Node rightChild) {
-            this.data = data;
-            this.leftChild = leftChild;
-            this.rightChild = rightChild;
-        }
-    }
-
-    private SimpleTask() {
+public final class BinarySearch {
+    private BinarySearch() {
         // Should not be instantiated
     }
 
-    /**
-        output digits of two digit input number separated by space
-     */
+    private static boolean isInArray(int[] array, int value) {
+        int left = 0;
+        int right = array.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (array[mid] == value) {
+                return true;
+            }
+            if (array[mid] > value) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return false;
+    }
+
     private static void solve(final FastScanner in, final PrintWriter out) {
-        int twoDigitNumber = in.nextInt();
-        int firstDigit = twoDigitNumber / 10;
-        int secondDigit = twoDigitNumber % 10;
-        out.print(firstDigit + " " + secondDigit);
+        int n = in.nextInt();
+        int q = in.nextInt();
+        int[] numbers = new int[n];
+        for (int i = 0; i < n; i++) {
+            numbers[i] = in.nextInt();
+        }
+        for (int i = 0; i < q; i++) {
+            int k = in.nextInt();
+            System.out.println(isInArray(numbers, k) ? "YES" : "NO");
+        }
     }
 
     private static class FastScanner {

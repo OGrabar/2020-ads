@@ -8,45 +8,36 @@ import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 /**
- * Problem 5327.
+ * https://www.e-olymp.com/ru/problems/3737
  */
-public final class Brackets {
-
-    static class Node {
-        char data;
-        Node leftChild;
-        Node rightChild;
-
-        public Node(char data, Node leftChild, Node rightChild) {
-            this.data = data;
-            this.leftChild = leftChild;
-            this.rightChild = rightChild;
-        }
-    }
-
-    private Brackets() {
+public final class IsHeap {
+    private IsHeap() {
         // Should not be instantiated
     }
 
-    /**
-     * output is "YES" if input bracket sequence is correct, otherwise output is "NO".
-     * input bracket sequence should contain only round brackets or output will be incorrect
-     */
     private static void solve(final FastScanner in, final PrintWriter out) {
-        char[] bracketSequence = in.next().toCharArray();
-
-        if (bracketSequence.length == 0) {
-            out.print("YES");
-            return;
+        int n = in.nextInt();
+        n++;
+        boolean isHeap = true;
+        int[] a = new int[n];
+        for (int i = 1; i < n; i++) {
+            a[i] = in.nextInt();
         }
-
-        int bracketWithoutPair = 0;
-        for (char bracket : bracketSequence) {
-            bracketWithoutPair += bracket == '(' ? 1 : -1;
-            if (bracketWithoutPair < 0) { break; }
+        for (int i = 1; i < (n / 2) + 1; i++) {
+            if (2 * i < n) {
+                if (a[i] > a[2 * i]) {
+                    isHeap = false;
+                    break;
+                }
+            }
+            if (2 * i + 1 < n) {
+                if (a[i] > a[2 * i + 1]) {
+                    isHeap = false;
+                    break;
+                }
+            }
         }
-        String result = bracketWithoutPair == 0 ? "YES" : "NO";
-        out.print(result);
+        System.out.println(isHeap ? "YES" : "NO");
     }
 
     private static class FastScanner {
